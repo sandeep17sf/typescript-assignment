@@ -14,19 +14,25 @@ import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
-import RefreshIcon from '@mui/icons-material/Refresh';
+import RefreshIcon from "@mui/icons-material/Refresh";
 import DataTable, { type Column } from "./components/DataTable";
 import { dateFormat } from "./utils";
 import { generateData } from "./data";
 
-type User = {
+export enum Role {
+  SUPERADMIN = "SuperAdmin",
+  ADMIN = "Admin",
+  SUBSCRIBER = "Subscriber",
+}
+
+export type User = {
   id: string;
   firstName: string;
   middleName: string;
   lastName: string;
   email: string;
   phoneNumber: string;
-  role: string;
+  role: Role;
   address: string;
   updated_at: string;
   created_at: string;
@@ -70,7 +76,7 @@ function App() {
     {
       label: "Email",
       dataIndex: "email",
-      type: "email"
+      type: "email",
     },
     {
       label: "Phone Number",
@@ -83,12 +89,16 @@ function App() {
       type: "select",
       option: [
         {
-          label: "User",
-          value: "user",
+          label: "Subscriber",
+          value: Role.SUBSCRIBER,
         },
         {
           label: "Admin",
-          value: "admin",
+          value: Role.ADMIN,
+        },
+        {
+          label: "Admin",
+          value: Role.SUPERADMIN,
         },
       ],
     },
@@ -170,7 +180,12 @@ function App() {
           <Typography variant="h6" id="tableTitle" component="div">
             Users
           </Typography>
-          <Button size="small" startIcon={!!dataSource?.length && <RefreshIcon />} variant="contained" onClick={handleLoadData}>
+          <Button
+            size="small"
+            startIcon={!!dataSource?.length && <RefreshIcon />}
+            variant="contained"
+            onClick={handleLoadData}
+          >
             {!!dataSource?.length ? "Refresh Data" : "Load Data"}
           </Button>
         </Toolbar>

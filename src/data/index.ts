@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+import { Role, User } from "../App";
 
 function createData(
   firstName: string,
@@ -6,7 +7,7 @@ function createData(
   lastName: string,
   email: string,
   phoneNumber: string,
-  role: string,
+  role: Role,
   address: string,
   updated_at: string,
   created_at: string
@@ -24,8 +25,8 @@ function createData(
     created_at,
   };
 }
-export function generateData(length: number) {
-  let data = [];
+export function generateData(length: number): User[] {
+  let data  = [];
   for (let index = 0; index < length; index++) {
     data.push(
       createData(
@@ -34,7 +35,7 @@ export function generateData(length: number) {
         faker.name.lastName(),
         faker.internet.email(),
         faker.phone.number("+91 ### ## ##"),
-        "user",
+        Role.ADMIN,
         faker.address.city(),
         faker.date.past(10).toISOString(),
         faker.date.past(10).toISOString()
