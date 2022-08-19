@@ -156,7 +156,7 @@ function StandardTableRow(props: TableRowProps) {
       {columns.map((column) => {
         const { dataIndex } = column;
         return (
-          <TableCell key={dataIndex} width={150}>
+          <TableCell key={dataIndex} >
             {cellDataRender(row, column, cellOption)}
           </TableCell>
         );

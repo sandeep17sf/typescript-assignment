@@ -14,6 +14,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
+import RefreshIcon from '@mui/icons-material/Refresh';
 import DataTable, { type Column } from "./components/DataTable";
 import { dateFormat } from "./utils";
 import { generateData } from "./data";
@@ -69,6 +70,7 @@ function App() {
     {
       label: "Email",
       dataIndex: "email",
+      type: "email"
     },
     {
       label: "Phone Number",
@@ -168,7 +170,7 @@ function App() {
           <Typography variant="h6" id="tableTitle" component="div">
             Users
           </Typography>
-          <Button size="small" variant="contained" onClick={handleLoadData}>
+          <Button size="small" startIcon={!!dataSource?.length && <RefreshIcon />} variant="contained" onClick={handleLoadData}>
             {!!dataSource?.length ? "Refresh Data" : "Load Data"}
           </Button>
         </Toolbar>
