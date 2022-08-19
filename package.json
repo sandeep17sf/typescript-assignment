@@ -45,6 +45,8 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^7.4.0",
-    "@mui/icons-material": "^5.8.4"
+    "@mui/icons-material": "^5.8.4",
+    "@mui/x-date-pickers": "^5.0.0-beta.6",
+    "moment": "^2.29.4"
   }
 }
