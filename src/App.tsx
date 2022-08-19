@@ -10,80 +10,39 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { faker } from "@faker-js/faker";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 import DataTable, { type Column } from "./components/DataTable";
 import { dateFormat } from "./utils";
+import { generateData } from "./data";
+
 type User = {
   id: string;
-  firstName: string,
-  middleName: string,
-  lastName: string,
-  email: string,
-  phoneNumber: string,
-  role: string,
-  address: string,
-  updated_at: string,
-  created_at: string
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  role: string;
+  address: string;
+  updated_at: string;
+  created_at: string;
 };
 
-function createData(
-  firstName: string,
-  middleName: string,
-  lastName: string,
-  email: string,
-  phoneNumber: string,
-  role: string,
-  address: string,
-  updated_at: string,
-  created_at: string
-): User {
-  return {
-    id: faker.datatype.uuid(),
-    firstName,
-    middleName,
-    lastName,
-    email,
-    phoneNumber,
-    role,
-    address,
-    updated_at,
-    created_at,
-  };
-}
-function generateData(length: number) {
-  let data = [];
-  for (let index = 0; index < length; index++) {
-    data.push(
-      createData(
-        faker.name.firstName(),
-        faker.name.middleName(),
-        faker.name.lastName(),
-        faker.internet.email(),
-        faker.phone.number("+91 ### ## ##"),
-        "user",
-        faker.address.city(),
-        faker.date.past(10).toISOString(),
-        faker.date.past(10).toISOString()
-      )
-    );
-  }
-  return data;
-}
+let rowData: User[] = generateData(5);
 function App() {
   const [dataSource, setDataSource] = useState<User[]>([]);
   const handleLoadData = () => {
-    setDataSource(generateData(5));
+    setDataSource(rowData);
   };
   const handleRemoveUser = (id: string) => {
     let oldData = [...dataSource];
-    console.log(oldData);
     oldData = oldData.filter((item) => item.id !== id);
     setDataSource(oldData);
   };
+
   const handleRowSave = (values: User) => {
     const { id } = values;
     let oldData = [...dataSource];
@@ -93,6 +52,7 @@ function App() {
     }
     setDataSource(oldData);
   };
+
   let columns: Column[] = [
     {
       label: "First Name",
@@ -194,6 +154,7 @@ function App() {
       },
     },
   ];
+
   return (
     <div className="App">
       <CssBaseline />
@@ -202,8 +163,6 @@ function App() {
           sx={{
             flex: "1 1 100%",
             justifyContent: "space-between",
-            pl: { sm: 2 },
-            pr: { xs: 1, sm: 1 },
           }}
         >
           <Typography variant="h6" id="tableTitle" component="div">
