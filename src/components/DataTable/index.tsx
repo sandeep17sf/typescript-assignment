@@ -44,6 +44,7 @@ interface TableRowAction {
 interface cellFormRenderOption {
   action: TableRowAction;
   onChange: (key: string, value: any) => void;
+  editRowId: String | undefined | null,
 }
 
 export interface Column {
@@ -107,10 +108,9 @@ function cellFormRender(record: any, column: Column, option: any) {
 function cellDataRender(
   record: any,
   column: Column,
-  editRowId: String | undefined | null,
-  option: any
+  option: cellFormRenderOption
 ) {
-  if (editRowId === record?.id && column?.type !== "action") {
+  if (option.editRowId === record?.id && column?.type !== "action") {
     return cellFormRender(record, column, option);
   }
   if (column.render) {
@@ -146,6 +146,7 @@ function StandardTableRow(props: TableRowProps) {
   const cellOption: cellFormRenderOption = {
     action,
     onChange: onValueChange,
+    editRowId,
   };
   return (
     <TableRow
@@ -153,10 +154,10 @@ function StandardTableRow(props: TableRowProps) {
       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
     >
       {columns.map((column) => {
-        const { dataIndex, ...rest } = column;
+        const { dataIndex } = column;
         return (
-          <TableCell key={dataIndex} {...rest} sx={{ width: 150 }}>
-            {cellDataRender(row, column, editRowId, cellOption)}
+          <TableCell key={dataIndex} width={150}>
+            {cellDataRender(row, column, cellOption)}
           </TableCell>
         );
       })}
@@ -170,8 +171,8 @@ function DataTable(props: DataTableProps) {
     return (
       <TableHead>
         <TableRow>
-          {columns.map(({ label, ...rest }) => (
-            <TableCell key={label} {...rest} sx={{ width: "fit-content" }}>
+          {columns.map(({ label, }) => (
+            <TableCell key={label} width={200}>
               {label?.toUpperCase()}
             </TableCell>
           ))}
