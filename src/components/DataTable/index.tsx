@@ -12,7 +12,7 @@ import {
   TextFieldProps,
 } from "@mui/material";
 import EmptyBox from "./Empty";
-import { dateFormat } from "../../utils";
+import { DateFormatter } from "../../utils";
 
 export interface SelectOption {
   label?: string;
@@ -95,7 +95,7 @@ function cellFormRender(record: any, column: Column, option: any) {
       onChange={(e) => option?.onChange?.(column.dataIndex, e.target.value)}
       defaultValue={
         column?.type === "datetime-local"
-          ? dateFormat(record[column.dataIndex], true)
+          ? new DateFormatter(record[column.dataIndex]).formFormatDate()
           : record[column.dataIndex]
       }
       variant="standard"

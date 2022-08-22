@@ -16,7 +16,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import DataTable, { type Column } from "./components/DataTable";
-import { dateFormat } from "./utils";
+import { DateFormatter } from "./utils";
 import { generateData } from "./data";
 
 export enum Role {
@@ -111,7 +111,7 @@ function App() {
       dataIndex: "created_at",
       type: "datetime-local",
       render: (record) => {
-        return dateFormat(record.created_at);
+        return new DateFormatter(record.created_at).formattedDate();
       },
     },
     {
@@ -119,13 +119,13 @@ function App() {
       dataIndex: "updated_at",
       type: "datetime-local",
       render: (record) => {
-        return dateFormat(record.updated_at);
+        return new DateFormatter(record.created_at).formattedDate();
       },
     },
     {
       label: "Action",
       type: "action",
-      dataIndex: "updated_at",
+      dataIndex: "id",
       render: (record, _, action) => {
         if (record?.id === action.editRowId) {
           return (
