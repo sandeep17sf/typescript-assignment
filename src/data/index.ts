@@ -25,6 +25,7 @@ function createData(
     created_at,
   };
 }
+
 export function generateData(length: number): User[] {
   let data  = [];
   for (let index = 0; index < length; index++) {

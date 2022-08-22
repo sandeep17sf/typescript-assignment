@@ -22,9 +22,11 @@ export interface SelectOption {
 interface TableEditableRowProps {
   onSubmit: (values: any) => void;
 }
-export interface DataTableProps {
+
+export interface DataTableProps<T> {
   columns: Array<Column>;
-  data: any[];
+  data: T[];
+  rowKey?: string;
   editableRow?: TableEditableRowProps;
 }
 
@@ -44,7 +46,7 @@ interface TableRowAction {
 interface cellFormRenderOption {
   action: TableRowAction;
   onChange: (key: string, value: any) => void;
-  editRowId: String | undefined | null,
+  editRowId: String | undefined | null;
 }
 
 export interface Column {
@@ -156,7 +158,7 @@ function StandardTableRow(props: TableRowProps) {
       {columns.map((column) => {
         const { dataIndex } = column;
         return (
-          <TableCell key={dataIndex} >
+          <TableCell key={dataIndex}>
             {cellDataRender(row, column, cellOption)}
           </TableCell>
         );
@@ -165,13 +167,15 @@ function StandardTableRow(props: TableRowProps) {
   );
 }
 
-function DataTable(props: DataTableProps) {
+function DataTable<T extends { id: string }>(
+  props: DataTableProps<T>
+): JSX.Element {
   const { columns, data, editableRow } = props;
   const headerRender = () => {
     return (
       <TableHead>
         <TableRow>
-          {columns.map(({ label, }) => (
+          {columns.map(({ label }) => (
             <TableCell key={label} width={200}>
               {label?.toUpperCase()}
             </TableCell>
@@ -189,7 +193,7 @@ function DataTable(props: DataTableProps) {
           {data.map((row) => {
             return (
               <StandardTableRow
-                key={row.firstName}
+                key={row.id}
                 columns={columns}
                 data={row}
                 onSave={editableRow?.onSubmit}
