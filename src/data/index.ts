@@ -6,19 +6,19 @@ function createData(
   middleName: string,
   lastName: string,
   email: string,
-  phoneNumber: string,
+  phone: string,
   role: Role,
   address: string,
   updated_at: string,
   created_at: string
 ) {
   return {
-    id: faker.datatype.uuid(),
+    id: faker.datatype.number(),
     firstName,
     middleName,
     lastName,
     email,
-    phoneNumber,
+    phone,
     role,
     address,
     updated_at,

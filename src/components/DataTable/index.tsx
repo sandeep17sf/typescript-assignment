@@ -167,7 +167,7 @@ function StandardTableRow(props: TableRowProps) {
   );
 }
 
-function DataTable<T extends { id: string }>(
+function DataTable<T extends { id: number }>(
   props: DataTableProps<T>
 ): JSX.Element {
   const { columns, data, editableRow } = props;

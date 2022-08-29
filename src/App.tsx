@@ -17,8 +17,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import DataTable, { type Column } from "./components/DataTable";
 import { DateFormatter } from "./utils";
-import { generateData } from "./data";
-
+import  * as userService from "././service/user";
 export enum Role {
   SUPERADMIN = "SuperAdmin",
   ADMIN = "Admin",
@@ -26,25 +25,28 @@ export enum Role {
 }
 
 export type User = {
-  id: string;
+  id: number;
   firstName: string;
   middleName: string;
   lastName: string;
   email: string;
-  phoneNumber: string;
+  phone: string;
   role: Role;
   address: string;
   updated_at: string;
   created_at: string;
 };
 
-let rowData: User[] = generateData(5);
+
 function App() {
   const [dataSource, setDataSource] = useState<User[]>([]);
-  const handleLoadData = () => {
-    setDataSource(rowData);
+
+  const handleLoadData = async () => {
+    let data = await userService.getList()
+    console.log(data)
+    setDataSource(data as User[]);
   };
-  const handleRemoveUser = (id: string) => {
+  const handleRemoveUser = (id: number) => {
     let oldData = [...dataSource];
     oldData = oldData.filter((item) => item.id !== id);
     setDataSource(oldData);
@@ -80,7 +82,7 @@ function App() {
     },
     {
       label: "Phone Number",
-      dataIndex: "phoneNumber",
+      dataIndex: "phone",
       size: "small",
     },
     {
